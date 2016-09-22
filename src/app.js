@@ -6,32 +6,19 @@ var HelloWorldLayer = cc.Layer.extend({
         // 1. super init first
         this._super();
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask the window size
-        var size = cc.winSize;
+        var xhr = cc.loader.getXMLHttpRequest();
 
-        var loh = 0;
+        xhr.open("GET", "bssoft.pro/rbu/testJ.php");
+        xhr.setRequestHeader("Content-Type", "text/plain");
 
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        var helloLabel = new cc.LabelTTF("Hello World", "Arial", 38);
-        // position the label on the center of the screen
-        helloLabel.x = size.width / 2;
-        helloLabel.y = size.height / 2 + 200;
-        // add the label as a child to this layer
-        this.addChild(helloLabel, 5);
-
-        // add "HelloWorld" splash screen"
-        this.sprite = new cc.Sprite(res.HelloWorld_png);
-        this.sprite.attr({
-            x: size.width / 2,
-            y: size.height / 2
-        });
-        this.addChild(this.sprite, 0);
+        xhr.onreadystatechange = function ()
+        {
+            if(xhr.readyState == 4 && (xhr.status >= 200 && xhr.status <= 207))
+            {
+                var httpStatus = xhr.statusText;
+                cc.log(httpStatus);
+            }
+        }
 
         return true;
     }
